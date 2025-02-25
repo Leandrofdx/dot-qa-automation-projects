@@ -70,7 +70,7 @@ Se algum teste falhar, os logs e os relatórios podem ser acessados diretamente 
 ---
 
 ## 🔧 **Como Configurar o CI/CD?**
-Nenhuma configuração extra é necessária, pois o pipeline já está definido no **GitHub Actions**.  
+Atualizar a GITHUB_TOKEN **GitHub Actions**.  
 
 Se precisar rodar manualmente:
 1. Acesse **GitHub → Actions**
