@@ -1,0 +1,29 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+venv/
+env/
+.idea/
+.vscode/
+*.sqlite3
+*.log
+*.egg
+*.egg-info
+dist/
+build/
+*.bak
+*.swp
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Pytest
+.cache/
+
+# Virtual Environment
+venv/

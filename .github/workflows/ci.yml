@@ -1,0 +1,95 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-python:
+    name: Testes API com Pytest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalar dependências do projeto Python
+        run: |
+          cd qaDotPython
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Executar testes de API com Pytest
+        run: |
+          cd qaDotPython
+          pytest --html=results/python-report.html --self-contained-html
+
+      - name: Upload do relatório de testes da API
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-report
+          path: qaDotPython/results/python-report.html
+
+  test-cypress:
+    name: Testes Frontend com Cypress
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências do Cypress
+        run: |
+          cd qaDotCypress
+          npm install
+
+      - name: Executar testes E2E com Cypress
+        run: |
+          cd qaDotCypress
+          npm run generate-all-reports
+
+      - name: Upload do relatório de testes do Cypress
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-report
+          path: qaDotCypress/mochawesome-report/report-final.html
+
+  notify-results:
+    name: Notificar Resultados no PR
+    runs-on: ubuntu-latest
+    needs: [test-python, test-cypress] # Aguarda os dois testes antes de executar
+    steps:
+      - name: Postar Comentário no PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const prNumber = context.payload.pull_request.number;
+            const statusPython = "${{ job.status }}";
+            const statusCypress = "${{ job.status }}";
+
+            let message = `### 📝 Resultados dos Testes\n`;
+            message += `- **Testes de API:** ${statusPython === 'success' ? '✅ Passou' : '❌ Falhou'}\n`;
+            message += `- **Testes de Cypress:** ${statusCypress === 'success' ? '✅ Passou' : '❌ Falhou'}\n`;
+            message += `📄 **Relatórios disponíveis nos artefatos do workflow.**`;
+
+            github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: prNumber,
+              body: message
+            });
