@@ -15,7 +15,8 @@ dist/
 build/
 *.bak
 *.swp
-
+assets/
+report.html
 # macOS
 .DS_Store
 
