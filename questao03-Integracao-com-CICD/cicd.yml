@@ -23,20 +23,20 @@ jobs:
 
       - name: Instalar dependências do projeto Python
         run: |
-          cd qaDotPython
+          cd questao02-api-tests-python
           pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Executar testes de API com Pytest
         run: |
-          cd qaDotPython
+          cd questao02-api-tests-python
           pytest --html=results/python-report.html --self-contained-html
 
       - name: Upload do relatório de testes da API
         uses: actions/upload-artifact@v3
         with:
           name: python-report
-          path: qaDotPython/results/python-report.html
+          path: questao02-api-tests-python/results/python-report.html
 
   test-cypress:
     name: Testes Frontend com Cypress
@@ -52,19 +52,19 @@ jobs:
 
       - name: Instalar dependências do Cypress
         run: |
-          cd qaDotCypress
+          cd questao01-e2e-tests-cypress
           npm install
 
       - name: Executar testes E2E com Cypress
         run: |
-          cd qaDotCypress
+          cd questao01-e2e-tests-cypress
           npm run generate-all-reports
 
       - name: Upload do relatório de testes do Cypress
         uses: actions/upload-artifact@v3
         with:
           name: cypress-report
-          path: qaDotCypress/mochawesome-report/report-final.html
+          path: questao01-e2e-tests-cypress/mochawesome-report/report-final.html
 
   notify-results:
     name: Notificar Resultados no PR
