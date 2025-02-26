@@ -99,6 +99,19 @@ Este projeto tem como objetivo testar a API pública [JSONPlaceholder](https://j
 
 ## ⚙️ Como Configurar e Executar os Testes  
 
+## 📌 Pré-requisitos
+Antes de executar os testes, você precisa ter instalado:
+
+- **Python 3.7+** -  (Download Python)
+- **Pip (gerenciador de pacotes do Python)** 
+- **Virtualenv (opcional, mas recomendado)**
+
+Para verificar se o Python e o Pip estão instalados corretamente, execute:
+```bash
+python3 --version
+pip --version
+```
+
 ### **1️⃣ Clone o Repositório**  
 
 ```bash
