@@ -4,6 +4,9 @@ Este repositório contém projetos de automação de testes desenvolvidos para v
 
 Cada pasta representa um **desafio resolvido** em automação, organizados conforme os tópicos abordados.  
 
+
+[![Assista ao vídeo](thumbnail.gif)](https://youtu.be/_wuphae7j8I)
+
 ---
 
 ## 📂 Estrutura do Repositório  
